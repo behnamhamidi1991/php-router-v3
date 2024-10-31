@@ -1,9 +1,9 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
 require '../helpers.php';
-require basePath('Database.php');
 
-require basePath('Router.php');
+use Framework\Router;
 
 // Instantiate the router
 $router = new Router(); 

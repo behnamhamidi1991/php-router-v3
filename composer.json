@@ -1,0 +1,20 @@
+{
+  "name": "behnamhamidi1991/php-router-v3",
+  "description": "Job listing application",
+  "authors": [
+    {
+      "name": "Behnam Hamidi",
+      "email": "behnam@gmail.com"
+    },
+    {
+      "name": "Brad Traversy",
+      "email": "brad@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
