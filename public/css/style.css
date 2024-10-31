@@ -1,0 +1,376 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth;
+  font-family: "Roboto";
+}
+
+:root {
+  --bg-color: #131313;
+  --primary-color: #2b2b2b;
+  --secondary-color: #86868b;
+  --blue-color: #1561f0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #fdfdfd;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background-color: var(--primary-color);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* LOGO */
+.header .logo a {
+  display: flex;
+  gap: 10px;
+  color: #fdfdfd;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header .logo a i {
+  font-size: 22px;
+}
+
+.header .logo a p {
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.header-right {
+  display: flex;
+  gap: 25px;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  gap: 25px;
+}
+
+.navbar li a {
+  color: #fdfdfd;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.navbar li a:hover {
+  color: var(--blue-color);
+}
+.navbar li a:active {
+  color: #fdfdfd;
+}
+
+/* USER */
+
+.header-user {
+  display: flex;
+  gap: 15px;
+}
+
+.header-user li a {
+  color: #fdfdfd;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.header-user li a:hover {
+  color: var(--blue-color);
+}
+
+.createBtn {
+  background-color: var(--bg-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.createBtn:hover {
+  background-color: var(--bg-color);
+}
+
+/* TOP BANNER */
+.top-banner {
+  display: flex;
+  flex-direction: column;
+  height: 110px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--blue-color);
+}
+
+.top-banner h1 {
+  font-size: 30px;
+  color: #fdfdfd;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-family: "Poppins";
+}
+
+.top-banner p {
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 4px;
+  color: #fdfdfd;
+}
+
+.homepage {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.homepage h1 {
+  font-size: 60px;
+  color: #fdfdfd;
+  font-family: "Poppins";
+}
+
+.homepage form {
+  width: 52%;
+  text-align: center;
+  position: relative;
+}
+
+.homepage form input {
+  width: 100%;
+  padding: 13px 17px;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  background-color: var(--primary-color);
+  margin-top: 20px;
+  color: #fdfdfd;
+}
+
+.homepage form button {
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  position: absolute;
+  right: 8px;
+  top: 27px;
+  cursor: pointer;
+  color: var(--secondary-color);
+}
+
+@media screen and (max-width: 1200px) {
+  .homepage h1 {
+    font-size: 40px;
+  }
+
+  .homepage form {
+    width: 62%;
+  }
+}
+
+.blog-container {
+  padding: 50px 15%;
+  padding-bottom: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, auto));
+  gap: 15px;
+}
+
+.blog-container .blog-card {
+  background-color: var(--primary-color);
+}
+
+.blog-container .blog-card img {
+  width: 100%;
+}
+
+.blog-container .blog-card .blog-card-content {
+  padding: 15px;
+}
+
+.blog-container .blog-card .blog-card-content h2 {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: "Poppins";
+}
+
+.blog-container .blog-card .blog-card-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.readmore-btn {
+  color: #fdfdfd;
+  background-color: var(--blue-color);
+  padding: 4px 7px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.readmore-btn:hover {
+  background-color: var(--bg-color);
+}
+
+footer {
+  height: 200px;
+  background-color: var(--primary-color);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer .contact {
+  display: flex;
+  gap: 15px;
+}
+
+footer .contact li i {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+footer .contact li i:hover {
+  color: var(--blue-color);
+}
+
+.user-footer p {
+  margin: 10px 0;
+}
+
+.user-footer p a {
+  color: var(--blue-color);
+  text-decoration: underline;
+  font-weight: 900;
+}
+
+.create-post-footer {
+  background-color: var(--blue-color);
+  color: #fdfdfd;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* REGISTER FORM */
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 100px 10%;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-form h1 {
+  font-size: 32px;
+  margin: 30px 0;
+  padding-top: 100px;
+}
+
+.create-form form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 10px;
+  padding: 100px 2%;
+}
+
+.create-form form input {
+  outline: none;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.create-form form textarea {
+  resize: none;
+  height: 100px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.create-form form button {
+  padding: 7px 2px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--blue-color);
+  color: #fdfdfd;
+  font-weight: 900;
+}
+
+/* REGISTER */
+
+.register-page {
+  height: 100vh;
+  padding: 100px 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  gap: 10px;
+}
+
+.register-form input {
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: #fdfdfd;
+}
+
+.register-form button {
+  padding: 12px;
+  background-color: var(--blue-color);
+  color: #fdfdfd;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error h1 {
+  font-size: 70px;
+  font-weight: 900;
+}
+
+.error p {
+  font-weight: 400;
+  font-size: 15px;
+}

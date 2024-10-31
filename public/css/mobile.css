@@ -1,0 +1,19 @@
+.header-user {
+  display: none;
+}
+
+.top-banner h1 {
+  font-size: 22px;
+}
+
+.top-banner p {
+  font-size: 13px;
+}
+
+.homepage h1 {
+  font-size: 28px;
+}
+
+.homepage form {
+  width: 75%;
+}
