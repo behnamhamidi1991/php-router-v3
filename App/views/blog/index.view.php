@@ -12,17 +12,13 @@
           <div class="blog-card-content">
             <h2><?= $post['title'] ?></h2>
             <p>
-              <?= $post['content'] ?>
+            <?= substr($post['content'], 0, 200) ?> ...
             </p>
             <a href="/" class="readmore-btn">Read More</a>
           </div>
         </div>
         <?php endforeach ?>
-
-     
-
-      
-
+        
       </div>
     </section>
 

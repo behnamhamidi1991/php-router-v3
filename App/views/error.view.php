@@ -4,8 +4,8 @@
 
 
 <section class="error">
-    <h1>403</h1>
-    <p>You are not authorized to view this resource!</p>
+    <h1><?= $status ?></h1>
+    <p><?= $message ?></p>
 </section>
 
 
