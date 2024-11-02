@@ -14,7 +14,7 @@
             <p>
             <?= substr($post['content'], 0, 200) ?> ...
             </p>
-            <a href="/" class="readmore-btn">Read More</a>
+            <a href="/blog/<?= $post['id'] ?>" class="readmore-btn">Read More</a>
           </div>
         </div>
         <?php endforeach ?>

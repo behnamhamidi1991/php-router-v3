@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Framework\Database;
+use Framework\Validation;
 
 class BlogController 
 {
@@ -28,9 +29,9 @@ class BlogController
         loadView('blog/create');
     }
 
-    public function show() 
+    public function show($params) 
     {
-        $id = $_GET['id'] ?? ''; 
+        $id = $params['id'] ?? ''; 
 
         $params = [
             'id' => $id
