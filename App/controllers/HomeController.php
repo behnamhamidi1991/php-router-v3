@@ -15,7 +15,7 @@ class HomeController {
 
     public function index() {
 
-        $posts = $this->db->query('SELECT * FROM posts LIMIT 6')->fetchAll();
+        $posts = $this->db->query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 6')->fetchAll();
 
         loadView('home', [
             'posts' => $posts

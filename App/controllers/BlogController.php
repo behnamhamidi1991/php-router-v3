@@ -17,7 +17,7 @@ class BlogController
 
     public function index() 
     {
-        $posts = $this->db->query('SELECT * FROM posts')->fetchAll();
+        $posts = $this->db->query('SELECT * FROM posts ORDER BY created_at DESC')->fetchAll();
 
         loadView('blog/index', [
             'posts' => $posts
@@ -38,7 +38,7 @@ class BlogController
         ];
 
         
-        $post = $this->db->query('SELECT * FROM posts WHERE id = :id', $params)->fetch();
+        $post = $this->db->query('SELECT * FROM posts WHERE id = :id ', $params)->fetch();
     
         loadView('blog/show', [
             'post' => $post
@@ -92,7 +92,7 @@ class BlogController
 
             if(move_uploaded_file($fileTmpPath, $dest_path)) {
                 // Store the relative path
-                $newPostData['image_url'] = $dest_path;
+                $newPostData['image_url'] = '/images/posts/' . $newFileName;
                 } else {
                 $errors['image_url'] = 'There was an error moving the uploaded file.';
                 }
@@ -136,8 +136,31 @@ class BlogController
 
             $this->db->query($query, $newPostData);
 
-            header('Location: /blog');
-            exit;
+            redirect('/blog');
         }
+    }
+
+    /**
+     * Delete a post
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function destroy ($params) {
+        $id = $params['id'];
+
+        $params = [
+            'id' => $id
+        ];
+
+        $post = $this->db->query('SELECT * FROM posts WHERE id = :id', $params)->fetch();
+
+        if (!$post) {
+            ErrorController::notFound('Post not found!');
+            return;
+        }
+
+        $this->db->query('DELETE FROM posts WHERE id = :id', $params);
+        redirect('/blog');
     }
 }

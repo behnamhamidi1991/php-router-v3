@@ -5,6 +5,7 @@ $router->get('/blog', 'BlogController@index');
 $router->get('/blog/create', 'BlogController@create');
 $router->post('/blog', 'BlogController@store');
 $router->get('/blog/{id}', 'BlogController@show');
+$router->delete('/blog/{id}', 'BlogController@destroy');
 
 // $router->get('/', 'controllers/home.php');
 // $router->get('/blog', 'controllers/blog/index.php');

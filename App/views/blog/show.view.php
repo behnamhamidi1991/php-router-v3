@@ -14,9 +14,14 @@
               <?= $post['content'] ?>
             </p>
             <a href="/blog" class="readmore-btn">Back to Blog</a>
+         
           </div>
+   
         </div>
-
+         <form method="POST">
+          <input type="hidden" name="_method" value="DELETE" >
+            <button class="readmore-btn">Delete</button>
+         </form>
     </section>
 
 

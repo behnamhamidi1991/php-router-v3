@@ -83,3 +83,14 @@ function sanitize($dirty)
 {
     return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
 }
+
+/**
+ * Redirect route
+ * 
+ * @param $path
+ * @return void
+ */
+function redirect($path) {
+    header("Location: $path");
+    exit;
+}
