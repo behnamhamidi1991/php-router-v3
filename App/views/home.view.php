@@ -11,7 +11,7 @@
         
       <?php foreach($posts as $post) : ?>
         <div class="blog-card">
-          <img src="<?= $post['image_url'] ?>" alt="" />
+          <img src="<?=  htmlspecialchars($post['image_url'])  ?>" alt="" />
           <div class="blog-card-content">
             <h2> <?= $post['title'] ?> </h2>
             <p>
