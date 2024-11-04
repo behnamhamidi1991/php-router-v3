@@ -1,5 +1,8 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
+
 
 /**
  * Get the base route
@@ -81,7 +84,9 @@ function inspectAndDie($value)
  */
 function sanitize($dirty) 
 {
-    return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+    $config = HTMLPurifier_Config::createDefault();
+    $purifier = new HTMLPurifier($config);
+    return $purifier->purify($dirty);
 }
 
 /**
@@ -94,3 +99,15 @@ function redirect($path) {
     header("Location: $path");
     exit;
 }
+
+
+// /**
+//  * Sanitize Data
+//  * 
+//  * @param string $dirty
+//  * @return string
+//  */
+// function sanitize($dirty) 
+// {
+//     return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+// }

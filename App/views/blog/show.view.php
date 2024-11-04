@@ -1,6 +1,15 @@
 <?php loadPartial('head') ?>
 <?php loadPartial('navbar') ?>
 <?php loadPartial('top-banner') ?>
+<?php loadPartial('message') ?>
+
+  <div class="edit-delete-container">   
+   <form method="POST">
+          <input type="hidden" name="_method" value="DELETE" >
+            <button >Delete</button>
+     </form>
+         <a  href="/blog/edit/<?= $post['id'] ?>">Edit</a>
+   </div>
     
     <!-- Blog Section -->
     <section id="blog" class="blog">
@@ -18,10 +27,7 @@
           </div>
    
         </div>
-         <form method="POST">
-          <input type="hidden" name="_method" value="DELETE" >
-            <button class="readmore-btn">Delete</button>
-         </form>
+     
     </section>
 
 

@@ -16,5 +16,8 @@
       "Framework\\": "Framework/",
       "App\\": "App/"
     }
+  },
+  "require": {
+    "ezyang/htmlpurifier": "^4.18"
   }
 }

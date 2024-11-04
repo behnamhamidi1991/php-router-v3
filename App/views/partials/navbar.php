@@ -24,10 +24,10 @@
 
       <ul class="header-user">
         <li>
-          <a href="/login">Login</a>
+          <a href="auth/login">Login</a>
         </li>
         <li>
-          <a href="/register">Register</a>
+          <a href="auth/register">Register</a>
         </li>
         <li>
           <a href="/blog/create" class="createBtn">Create a new post</a>

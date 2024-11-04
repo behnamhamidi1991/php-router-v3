@@ -15,6 +15,11 @@ class BlogController
         $this->db = new Database($config);
     }
 
+    /**
+     * Load index view
+     *
+     * @return void
+     */
     public function index() 
     {
         $posts = $this->db->query('SELECT * FROM posts ORDER BY created_at DESC')->fetchAll();
@@ -24,11 +29,22 @@ class BlogController
         ]);
     }
 
+    /**
+     * Load create post
+     *
+     * @return void
+     */
     public function create() 
     {
         loadView('blog/create');
     }
 
+    /**
+     * Show a single post
+     *
+     * @param string $params
+     * @return void
+     */
     public function show($params) 
     {
         $id = $params['id'] ?? ''; 
@@ -39,6 +55,14 @@ class BlogController
 
         
         $post = $this->db->query('SELECT * FROM posts WHERE id = :id ', $params)->fetch();
+
+        
+        // Check if the post exists
+        if (!$post) {
+            ErrorController::notFound('Post not found!');
+            return;
+        }
+
     
         loadView('blog/show', [
             'post' => $post
@@ -136,6 +160,8 @@ class BlogController
 
             $this->db->query($query, $newPostData);
 
+            $_SESSION['success_message'] = 'Post successfully created!';
+
             redirect('/blog');
         }
     }
@@ -161,6 +187,141 @@ class BlogController
         }
 
         $this->db->query('DELETE FROM posts WHERE id = :id', $params);
+        // Set flash message
+        $_SESSION['success_message'] = 'Post successfully deleted!';
+
         redirect('/blog');
     }
+
+     /**
+     * Show the post edit form
+     *
+     * @param string $params
+     * @return void
+     */
+    public function edit($params) 
+    {
+        $id = $params['id'] ?? ''; 
+
+        $params = [
+            'id' => $id
+        ];
+
+        
+        $post = $this->db->query('SELECT * FROM posts WHERE id = :id ', $params)->fetch();
+
+        // Check if the post exists
+        if (!$post) {
+            ErrorController::notFound('Post not found!');
+            return;
+        }
+
+        loadView('blog/edit', [
+            'post' => $post
+        ]);
+    }
+
+
+    /**
+     * Update a post
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function update($params) {
+
+        $id = $params['id'] ?? ''; 
+
+        $params = [
+            'id' => $id
+        ];
+
+        
+        $post = $this->db->query('SELECT * FROM posts WHERE id = :id ', $params)->fetch();
+
+        // Check if the post exists
+        if (!$post) {
+            ErrorController::notFound('Post not found!');
+            return;
+        }
+
+        $allowedFields = ['title', 'content', 'category'];
+
+        $updatedValues = [];
+
+        $updatedValues = array_intersect_key($_POST, array_flip($allowedFields));
+
+        $updatedValues = array_map('sanitize', $updatedValues);
+
+        $requiredFields = ['title', 'content'];
+
+        $errors = [];
+
+        foreach($requiredFields as $field) {
+            if (empty($updatedValues[$field]) || !Validation::string($updatedValues[$field])) {
+                $errors[$field] = ucfirst($field) . ' is required';
+            }
+        }
+
+         // START IMAGE
+         if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image_url']['tmp_name'];
+            $fileName = $_FILES['image_url']['name'];
+            $fileSize = $_FILES['image_url']['size'];
+            $fileType = $_FILES['image_url']['type'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
+
+            
+            // Sanitize file name
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+
+            // Check if the file has one of the allowed extensions
+            $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg');
+            if (in_array($fileExtension, $allowedfileExtensions)) {
+            // Directory in which the uploaded file will be moved
+            $uploadFileDir = basePath('public/images/posts/');
+            $dest_path = $uploadFileDir . $newFileName;
+
+            if(move_uploaded_file($fileTmpPath, $dest_path)) {
+                // Store the relative path
+                $updatedValues['image_url'] = '/images/posts/' . $newFileName;
+                } else {
+                $errors['image_url'] = 'There was an error moving the uploaded file.';
+                }
+                } else {
+                $errors['image_url'] = 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions);
+                }
+                } else {
+                $updatedValues['image_url'] = $post['image_url'];
+                }
+            // END IMAGE
+
+        if (!empty($errors)) {
+            loadView('blog/edit', [
+                'post' => $post,
+                'errors' => $errors
+            ]);
+            exit;
+        } else {
+            // Submit to database
+            $updateFields = [];
+
+            foreach(array_keys($updatedValues) as $field) {
+                $updatedFields[] = "{$field} = :{$field}";
+            }
+
+            $updatedFields = implode(', ', $updatedFields);
+
+            $updatedQuery = "UPDATE posts SET $updatedFields WHERE id = :id";
+
+            $updatedValues['id'] = $id;
+
+           $this->db->query($updatedQuery, $updatedValues);
+
+           $_SESSION['success_message'] = 'Post updated!';
+           redirect('/blog/' . $id);
+        }
+    }
+
 }

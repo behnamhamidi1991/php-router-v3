@@ -377,3 +377,52 @@ footer .contact li i:hover {
   font-weight: 400;
   font-size: 15px;
 }
+
+.success-message {
+  background-color: rgb(69, 182, 69);
+  color: #fff;
+  padding: 10px;
+  font-size: 25px;
+}
+
+.error-message {
+  background-color: rgb(211, 60, 60);
+  color: #fff;
+  padding: 10px;
+  font-size: 25px;
+}
+
+.edit-delete-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.edit-delete-container button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: red;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-delete-container a {
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: rgb(240, 170, 19);
+  color: #fff;
+  font-weight: 900;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
