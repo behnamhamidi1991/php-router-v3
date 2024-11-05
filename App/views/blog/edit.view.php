@@ -4,13 +4,9 @@
 
     <section class="create-form">
       <h1>Create a new post</h1>
-      <?php if (isset($errors)) : ?>
-        <?php foreach($errors as $error) : ?>
-            <div style="color: red">
-              <?= $error ?>
-            </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
+      <?= loadPartial('errors', [
+      'errors' => $errors ?? []
+        ]) ?>
       <form method="POST" action="/blog/<?= $post['id'] ?>" enctype="multipart/form-data">
         <input type="hidden" name="_method" value="PUT">
         <input type="file" name="image_url" />
