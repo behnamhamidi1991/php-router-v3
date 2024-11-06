@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
 
 class BlogController 
 {
@@ -80,7 +81,7 @@ class BlogController
 
         $newPostData = array_intersect_key($_POST, array_flip($allowedFields));
 
-        $newPostData['user_id'] = 1;
+        $newPostData['user_id'] = Session::get('user')['id'];
 
         $newPostData = array_map('sanitize', $newPostData);
 
