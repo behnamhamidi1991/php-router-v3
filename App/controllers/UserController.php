@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
 
 class UserController {
     protected $db;
@@ -59,7 +60,7 @@ class UserController {
         }
 
         if (!Validation::match($password, $passwordConfirmation)) {
-            $errors['password'] = 'Password must be at least 6 characters';
+            $errors['password'] = 'Password do not match';
         }
 
         if (!empty($errors)) {
@@ -71,8 +72,118 @@ class UserController {
                 ]
                 ]);
                 exit;
-        } else {
-            inspectAndDie('Successfully Stored!');
         }
+
+        // Check if email exists
+        $params = [
+            'email' => $email
+        ];
+
+        $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+        if ($user) {
+            $errors['email'] = 'That email already exists!';
+            loadView('users/create', [
+                'errors' => $errors
+            ]);
+            exit;
+        }
+
+        // Create user account 
+        $params = [
+            'name' => $name,
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT)
+        ];
+
+        $this->db->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)', $params);
+
+        // Get the new user ID
+        $userId = $this->db->conn->lastInsertId();
+
+        // Set user session
+        Session::set('user', [
+            'id' => $userId,
+            'name' => $name,
+            'email' => $email
+        ]);
+
+        redirect('/');
+    }
+
+    /**
+     * Logout a user and kill session
+     * 
+     * @return void
+     */
+    public function logout() {
+        Session::clearAll();
+        $params = session_get_cookie_params();
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+        redirect('/');
+    }
+
+    /**
+     * Authenticate a user with email and password
+     * 
+     * @return void
+     */
+    public function authenticate() {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $errors = [];
+
+         // Validation 
+         if (!Validation::email($email)) {
+            $errors['email'] = 'Please enter a valid email';
+         }
+
+           // Validation 
+           if (!Validation::string($password, 6, 50)) {
+            $errors['password'] = 'Password must be at least 6 characters';
+         }
+
+         // Check for errors 
+         if (!empty($errors)) {
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+         }
+
+         // Check for email
+         $params = [
+            'email' => $email
+         ];
+
+         $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+         if (!$user) {
+            $errors['email'] = 'Incorrect Credentials'; 
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+         }
+
+         // Check if password is correct
+         if (!password_verify($password, $user['password'])) {
+            $errors['email'] = 'Incorrect Credentials'; 
+            loadView('users/login', [
+                'errors' => $errors
+            ]);
+            exit;
+         }
+
+         // Set the session 
+         Session::set('user', [
+            'id' => $user['id'],
+            'name' => $user['name'],
+            'email' => $user['email']
+        ]);
+
+        redirect('/');
     }
 }

@@ -1,4 +1,8 @@
-
+<?php 
+  use Framework\Session;
+?>
+    
+    
     <!-- Header -->
     <header class="header">
       <div class="header-right">
@@ -23,14 +27,27 @@
       </div>
 
       <ul class="header-user">
-        <li>
+        <?php if(Session::has('user')) : ?>
+          <li class="welcome">
+            Welcome <?= Session::get('user')['name'] ?>
+          </li>
+          <li>
+            <form action="/auth/logout" method="POST">
+              <button type="submit" class="logout">Logout</button>
+            </form>
+          </li>
+          <li>
+            <a href="/blog/create" class="createBtn">Create a new post</a>
+          </li>
+        <?php else : ?>
+          <li>
           <a href="/auth/login">Login</a>
         </li>
         <li>
           <a href="/auth/register">Register</a>
         </li>
-        <li>
-          <a href="/blog/create" class="createBtn">Create a new post</a>
-        </li>
+        <?php endif ; ?>
+    
+    
       </ul>
     </header>

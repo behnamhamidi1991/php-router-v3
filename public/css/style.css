@@ -426,3 +426,20 @@ footer .contact li i:hover {
   justify-content: center;
   align-items: center;
 }
+
+.logout {
+  font-size: 12px;
+  padding: 3px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.welcome {
+  background-color: rgb(29, 133, 165);
+  padding: 3px 5px;
+  border-radius: 3px;
+}
