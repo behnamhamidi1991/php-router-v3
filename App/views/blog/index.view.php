@@ -4,7 +4,7 @@
 
     <!-- Blog Section -->
     <section id="blog" class="blog">
-  
+    
     <?= loadPartial('message') ?>
       <div class="blog-container">
 

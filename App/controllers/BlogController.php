@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Framework\Database;
 use Framework\Validation;
 use Framework\Session;
+use Framework\Authorization;
 
 class BlogController 
 {
@@ -161,7 +162,7 @@ class BlogController
 
             $this->db->query($query, $newPostData);
 
-            $_SESSION['success_message'] = 'Post successfully created!';
+            Session::setFlashMessage('success_message', 'Post successfully created');
 
             redirect('/blog');
         }
@@ -182,14 +183,21 @@ class BlogController
 
         $post = $this->db->query('SELECT * FROM posts WHERE id = :id', $params)->fetch();
 
+        // Check if the post exists
         if (!$post) {
             ErrorController::notFound('Post not found!');
             return;
         }
 
+        // Authorization 
+        if (!Authorization::isOwner($post['user_id'])) {
+            Session::setFlashMessage('error_message', 'You are not authorized to delete this post');
+            return redirect('/blog/' . $post['id']);
+        } 
+
         $this->db->query('DELETE FROM posts WHERE id = :id', $params);
         // Set flash message
-        $_SESSION['success_message'] = 'Post successfully deleted!';
+        Session::setFlashMessage('success_message', 'Post successfully deleted');
 
         redirect('/blog');
     }
@@ -216,6 +224,12 @@ class BlogController
             ErrorController::notFound('Post not found!');
             return;
         }
+
+           // Authorization 
+           if (!Authorization::isOwner($post['user_id'])) {
+            Session::setFlashMessage('error_message', 'You are not authorized to edit this post');
+            return redirect('/blog/' . $post['id']);
+        } 
 
         loadView('blog/edit', [
             'post' => $post
@@ -245,6 +259,12 @@ class BlogController
             ErrorController::notFound('Post not found!');
             return;
         }
+    
+             // Authorization 
+             if (!Authorization::isOwner($post['user_id'])) {
+                Session::setFlashMessage('error_message', 'You are not authorized to update this post');
+                return redirect('/blog/' . $post['id']);
+            } 
 
         $allowedFields = ['title', 'content', 'category'];
 
@@ -306,7 +326,7 @@ class BlogController
             exit;
         } else {
             // Submit to database
-            $updateFields = [];
+            $updatedFields = [];
 
             foreach(array_keys($updatedValues) as $field) {
                 $updatedFields[] = "{$field} = :{$field}";
@@ -320,7 +340,7 @@ class BlogController
 
            $this->db->query($updatedQuery, $updatedValues);
 
-           $_SESSION['success_message'] = 'Post updated!';
+           Session::setFlashMessage('success_message', 'Post successfully updated');
            redirect('/blog/' . $id);
         }
     }

@@ -3,6 +3,7 @@
 <?php loadPartial('top-banner') ?>
 <?php loadPartial('message') ?>
 
+<?php if (Framework\Authorization::isOwner($post['user_id'])) : ?>
   <div class="edit-delete-container">   
    <form method="POST">
           <input type="hidden" name="_method" value="DELETE" >
@@ -10,6 +11,7 @@
      </form>
          <a  href="/blog/edit/<?= $post['id'] ?>">Edit</a>
    </div>
+   <?php endif; ?>
     
     <!-- Blog Section -->
     <section id="blog" class="blog">
